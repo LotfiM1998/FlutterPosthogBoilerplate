@@ -1,0 +1,54 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+android {
+    namespace = "com.example.posthogboilerplate"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+        applicationId = "com.example.posthogboilerplate"
+        minSdk = 21
+        targetSdk = 35
+        versionCode = 1
+        versionName = flutter.versionName
+
+
+        // ✅ Ensure we are injecting placeholders into AndroidManifest.xml
+        manifestPlaceholders = [
+            POSTHOG_API_KEY: project.hasProperty('POSTHOG_API_KEY') ? POSTHOG_API_KEY : "",
+            POSTHOG_HOST: project.hasProperty('POSTHOG_HOST') ? POSTHOG_HOST : ""
+        ]
+
+        // ✅ Ensure PostHog values are available in code
+        buildConfigField "String", "POSTHOG_API_KEY", "\"${POSTHOG_API_KEY}\""
+        buildConfigField "String", "POSTHOG_HOST", "\"${POSTHOG_HOST}\""
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+
+flutter {
+    source = "../.."
+}
