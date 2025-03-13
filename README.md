@@ -45,8 +45,11 @@ void main() async {
 
 Add API Key in android/gradle.properties
 ```
-POSTHOG_API_KEY=phc_YOUR_SECRET_API_KEY
-POSTHOG_HOST=https://eu.i.posthog.com
+org.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError
+android.useAndroidX=true
+android.enableJetifier=true
+POSTHOG_API_KEY=YOUR_SECRET_API_KEY
+POSTHOG_HOST=URI_OF_YOUR_POSTHOG
 ```
 Then, in android/app/build.gradle, add:
 
